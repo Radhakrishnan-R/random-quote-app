@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <div class="container">
+        <h2>Quote of the day</h2>
+        <div class="quote-box">
+            <blockquote></blockquote>
+            <span></span>
+        </div>
+        <div class="button-box">
+            <button onclick="newQuote()">New Quote</button>
+            <button onclick="newTweet()">Tweet</button>
+        </div>
+    </div>
+<script type="text/javascript">
+    const quoteBox = document.querySelector("blockquote");
+    const author = document.querySelector("span");
+
+    const apiURL = "https://type.fit/api/quotes";
+
+    async function newQuote(){
+        
+
+        console.log("hey");
+        const response = await fetch(apiURL);
+        var data = await response.json();
+        data = await data[Math.floor(Math.random() * data.length)];
+        console.log(data);
+
+        quoteBox.innerHTML = data.text;
+        author.innerHTML = data.author.split(",")[0];
+
+        document.querySelector(".quote-box").style.display = "block";
+    }
+
+    function newTweet(){
+        if(quoteBox.innerHTML === ""){
+            alert("Generate a quote!");
+        }else{
+            window.open("https://twitter.com/intent/tweet?text=" + quoteBox.innerHTML, "Tweet window", "width=500, height=300");
+        }
+        
+    }
+</script>
+</body>
+</html>
